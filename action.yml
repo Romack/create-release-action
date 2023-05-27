@@ -36,7 +36,7 @@ runs:
           try {
             const response = await github.rest.repos.createRelease({
               name: "${{ inputs.name }}",
-              tag_name: "${{ inputs.tag-name }}"
+              tag_name: "${{ inputs.tag-name }}",
               draft: "${{ inputs.draft }}",
               generate_release_notes: "${{ inputs.generate-release-notes }}",
               owner: context.repo.owner,
