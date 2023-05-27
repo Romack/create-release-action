@@ -13,13 +13,16 @@ inputs:
     description: 'The name of the tag'
   draft:
     description: 'Whether or not to create a draft release'
-    default: 'false'
+    type: boolean
+    default: false
   pre-release:
     description: 'Whether or not the release should be marked as a pre-release'
-    default: 'false'
+    type: boolean
+    default: false
   generate-release-notes:
     description: 'Whether to automatically generate the name and body for this release'
-    default: 'false'
+    type: boolean
+    default: false
 outputs:
   release-id:
     description: "ID of the GitHub release"
@@ -37,10 +40,10 @@ runs:
             const response = await github.rest.repos.createRelease({
               name: "${{ inputs.name }}",
               tag_name: "${{ inputs.tag-name }}",
-              draft: "${{ inputs.draft }}",
-              generate_release_notes: "${{ inputs.generate-release-notes }}",
+              draft: ${{ inputs.draft }},
+              generate_release_notes: ${{ inputs.generate-release-notes }},
               owner: context.repo.owner,
-              prerelease: "${{ inputs.pre-release }}",
+              prerelease: ${{ inputs.pre-release }},
               repo: context.repo.repo,
             });
           
