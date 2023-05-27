@@ -1,0 +1,24 @@
+name: Verify PR - No ESLint/TSLint Disable
+on: [pull_request]
+
+jobs:
+  no-eslint-disable:
+    name: No ESLint Disable Comments
+    runs-on: ubuntu-latest
+    env:
+      NPM_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: 'package.json'
+          cache: 'yarn'
+
+      - name: Lint Project
+        run: |
+          npx no-eslint-disable src
+          npx no-tslint-disable src

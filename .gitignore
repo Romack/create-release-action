@@ -1,0 +1,10 @@
+# General source control exclusions
+coverage
+node_modules
+package-lock.json
+
+# WebStorm/IntelliJ
+.idea
+
+# VS Code
+.vscode

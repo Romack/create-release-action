@@ -1,0 +1,11 @@
+name: 'typescript-github-action-template'
+description: 'A reusable template for creating a GitHub Action using TypeScript.'
+author: 'Invitation Homes'
+inputs:
+  name: # change this
+    required: true
+    description: 'who to greet'
+    default: 'world'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
