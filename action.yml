@@ -23,10 +23,12 @@ inputs:
     description: 'Whether to automatically generate the name and body for this release'
     type: boolean
     default: false
+
 outputs:
   release-id:
     description: "ID of the GitHub release"
-    value: ${{ steps.create-github-release.outputs.release-id }}
+    value: ${{ steps.create-release.outputs.id }}
+
 runs:
   using: 'composite'
   steps:
@@ -48,12 +50,8 @@ runs:
             });
           
             return {
-              "release-id": response.data.id,
+              id: response.data.id,
             }
           } catch (error) {
             core.setFailed(error.message);
           }
-
-    - name: Echo Release ID
-      shell: bash
-      run: echo "Release ID is ${{ steps.create-release.outputs.release-id }}"
