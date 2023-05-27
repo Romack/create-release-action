@@ -48,10 +48,7 @@ runs:
               prerelease: ${{ inputs.pre-release }},
               repo: context.repo.repo,
             });
-          
-            return {
-              id: response.data.id,
-            }
+            return response.data.id;
           } catch (error) {
             core.setFailed(error.message);
           }
