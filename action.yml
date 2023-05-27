@@ -55,4 +55,5 @@ runs:
           }
 
     - name: Echo Release ID
+      shell: bash
       run: echo "Release ID is ${{ steps.create-release.outputs.release-id }}"
