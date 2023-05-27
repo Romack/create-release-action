@@ -27,7 +27,7 @@ inputs:
 outputs:
   release-id:
     description: "ID of the GitHub release"
-    value: ${{ steps.create-release.outputs.id }}
+    value: ${{ steps.create-release.outputs.result }}
 
 runs:
   using: 'composite'
@@ -37,6 +37,7 @@ runs:
       uses: actions/github-script@v6
       with:
         github-token: ${{ inputs.github-token }}
+        result-encoding: string
         script: |
           try {
             const response = await github.rest.repos.createRelease({
