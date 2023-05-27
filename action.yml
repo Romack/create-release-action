@@ -40,12 +40,12 @@ runs:
               draft: "${{ inputs.draft }}",
               generate_release_notes: "${{ inputs.generate-release-notes }}",
               owner: context.repo.owner,
-              prerelease: "${{ inputs.pre-relase }}",
+              prerelease: "${{ inputs.pre-release }}",
               repo: context.repo.repo,
             });
           
             return {
-              release-id: response.data.id,
+              "release-id": response.data.id,
             }
           } catch (error) {
             core.setFailed(error.message);
