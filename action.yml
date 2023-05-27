@@ -1,11 +1,52 @@
-name: 'typescript-github-action-template'
+name: 'create-release-action'
 description: 'A reusable template for creating a GitHub Action using TypeScript.'
 author: 'Invitation Homes'
 inputs:
-  name: # change this
+  github-token:
     required: true
-    description: 'who to greet'
-    default: 'world'
+    description: 'The GitHub token to use'
+  name:
+    required: true
+    description: 'The name of the release'
+  tag-name:
+    required: true
+    description: 'The name of the tag'
+  draft:
+    description: 'Whether or not to create a draft release'
+    default: 'false'
+  pre-release:
+    description: 'Whether or not the release should be marked as a pre-release'
+    default: 'false'
+  generate-release-notes:
+    description: 'Whether to automatically generate the name and body for this release'
+    default: 'false'
+outputs:
+  release-id:
+    description: "ID of the GitHub release"
+    value: ${{ steps.create-github-release.outputs.release-id }}
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: 'composite'
+  steps:
+    - name: Create GitHub release
+      id: create-github-release
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{ inputs.github-token }}
+        script: |
+          try {
+            const response = await github.rest.repos.createRelease({
+              name: "${{ inputs.name }}",
+              tag_name: "${{ inputs.tag-name }}"
+              draft: "${{ inputs.draft }}",
+              generate_release_notes: "${{ inputs.generate-release-notes }}",
+              owner: context.repo.owner,
+              prerelease: "${{ inputs.pre-relase }}",
+              repo: context.repo.repo,
+            });
+          
+            return {
+              release-id: response.data.id,
+            }
+          } catch (error) {
+            core.setFailed(error.message);
+          }
