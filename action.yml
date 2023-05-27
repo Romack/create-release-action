@@ -31,7 +31,7 @@ runs:
   using: 'composite'
   steps:
     - name: Create GitHub release
-      id: create-github-release
+      id: create-release
       uses: actions/github-script@v6
       with:
         github-token: ${{ inputs.github-token }}
@@ -53,3 +53,6 @@ runs:
           } catch (error) {
             core.setFailed(error.message);
           }
+
+    - name: Echo Release ID
+      run: echo "Release ID is ${{ steps.create-release.outputs.release-id }}"
